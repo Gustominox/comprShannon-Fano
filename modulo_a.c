@@ -50,7 +50,7 @@ int n_letras = 0;
 for (int i = 0; i < tmh_buf; i++)
     {
             for (int j = i; j < tmh_buf; j++)
-                if( buffer_e[j] == '\0'){//(buffer_e[j] == '{')&&(buffer_e[j+1] == '0')&&(buffer_e[j+2] == '}')){
+                if( buffer_e[j] == '\0'){
                     cont_seq++;
                 }else {
                     break;
@@ -84,10 +84,6 @@ for (int i = 0; i < tmh_buf; i++)
     }
 escreve_rle(n_letras,letra_anterior,buffer_s,&i_s);
 
-//printf("buffer entrada:%d-%d-%d-%d-%d-%d-%d-%d\n",buffer_e[0],buffer_e[1],buffer_e[2],buffer_e[3],buffer_e[4],buffer_e[5],buffer_e[6],buffer_e[7]);
-//printf("buffer saida:%d-%d-%d-%d-%d-%d\n",buffer_s[0],buffer_s[1],buffer_s[2],buffer_s[3],buffer_s[4],buffer_s[5]);
-
-
 return i_s;
 
 }
@@ -101,7 +97,6 @@ void do_rle(char *nome_do_fich,size_t inp_size,float *compressao,unsigned long l
     unsigned long size_of_last_block = * end_size_of_last_block;
     unsigned long block_size = *end_block_size;
     int tmh_buf_s;
-    //processamento_blocos(nome_do_fich,inp_size,&tamanho_ficheiro, &n_blocks, &size_of_last_block, &block_size);
     FILE *f_e = fopen(nome_do_fich, "rb");
     char nome_do_fich_rle [100];
     strcpy(nome_do_fich_rle,nome_do_fich);
@@ -109,8 +104,6 @@ void do_rle(char *nome_do_fich,size_t inp_size,float *compressao,unsigned long l
     strcat(nome_do_fich_rle,".rle");
     FILE *f_s = fopen(nome_do_fich_rle, "w+");
     
-    //printf("print:\n%llu\n%lu\n%lld\n%lu\n", tamanho_ficheiro,block_size,n_blocks,size_of_last_block);
-    //printf("aqui");
     unsigned long tmh_buf_e;
     
     if (block_size > size_of_last_block) tmh_buf_e = block_size;
@@ -123,7 +116,6 @@ void do_rle(char *nome_do_fich,size_t inp_size,float *compressao,unsigned long l
 
     
     for (i = 0; i < n_blocks-1; ++i){
-        //printf("%d\n", i);
         
         fread(buffer_e, block_size,1,f_e);
         tmh_buf_s = do_rle_aux(buffer_e,buffer_s,block_size);
@@ -143,9 +135,7 @@ void do_rle(char *nome_do_fich,size_t inp_size,float *compressao,unsigned long l
             
                 if (i==0){
                 float aux = (size_of_last_block-tmh_buf_s);
-                //printf("%d - %d = %f\n",tmh_buf,i_s,aux);
                 *compressao = (aux/size_of_last_block);
-                //printf("COMPRESSAO ultimo:%f\n",(*compressao));
             }
                      
             fwrite(buffer_s,tmh_buf_s,1,f_s);
