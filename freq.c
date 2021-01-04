@@ -67,7 +67,6 @@ int do_freqAUX(unsigned char *buffer_e, unsigned char *buffer_s, unsigned long b
         frequencias[k] = 0;
     char c;
     for(int i = 0; i < block_size; i++){
-        //printf("%d-",i);
         c = buffer_e[i];
         frequencias[c]++;
     }
@@ -115,7 +114,6 @@ void do_freqM (char *nome_do_fich, long long *n_blocks, unsigned long *size_of_l
     
     if (*block_size > *size_of_last_block) tmh_buf_e = *block_size;
     else tmh_buf_e = *size_of_last_block;
-    printf("%ld",tmh_buf_e);
     unsigned char *buffer_e = malloc(tmh_buf_e);
     unsigned char *buffer_s= malloc(67108864);
     
