@@ -6,6 +6,25 @@
 #include "freq.h"
 #include "modulo_b.h"
 
+//Shell> shafa exemplo.txt -m f -c r 
+//gcc -o bot *.c
+
+
+/*{
+    unsigned long long tamanho_ficheiro;
+    long long n_blocks;
+    unsigned long size_of_last_block;
+    unsigned long block_size;
+    size_t input_size = 65536;
+    char nome_do_fich[100]="aaa.txt";
+    printf("%s",nome_do_fich);
+    processamento_blocos(nome_do_fich,input_size,&tamanho_ficheiro, &n_blocks, &size_of_last_block, &block_size); 
+    printf("print:%llu\n%lu\n%lld\n%lu\n\n", tamanho_ficheiro,block_size,n_blocks,size_of_last_block);
+    modulo_a_exe(nome_do_fich,input_size,&tamanho_ficheiro, &n_blocks, &size_of_last_block, &block_size);
+    printf("print:%llu\n%lu\n%lld\n%lu\n", tamanho_ficheiro,block_size,n_blocks,size_of_last_block);
+
+}*/
+
 int main(int argc, char *argv[ ]){
     if(argc<4) exit(0);
     unsigned long long tamanho_ficheiro;
@@ -33,7 +52,8 @@ int main(int argc, char *argv[ ]){
     
     float compressaototal;
     float compressao;
-    clock_t start_t,end_t, t_exec;
+    clock_t start_t,end_t;
+    double t_exec;
 
 
 
@@ -74,6 +94,7 @@ int main(int argc, char *argv[ ]){
                     
                     strcpy(nome_do_fich_rle,nome_do_fich);
                     float aux = (tamanho_ficheiro_ori-tamanho_ficheiro_rle);
+                    //printf("%d - %d = %f",tamanho_ficheiro_ori,tamanho_ficheiro_rle,aux);
                     compressaototal = (aux/tamanho_ficheiro_ori*100);
                     
                     printf("Compressão RLE: %s (%.2f%% compressão)\n",nome_do_fich, compressaototal);//Compressão RLE: exemplo.txt.rle (13% compressão)
@@ -96,8 +117,8 @@ int main(int argc, char *argv[ ]){
                 }
                 
                     end_t = clock();
-                    t_exec = ((double)(end_t-start_t)/ CLOCKS_PER_SEC) * 1000;
-                    printf("Tempo de execução do módulo (ms): %ld\n", t_exec);
+                    t_exec = ((double)(end_t-start_t)/ CLOCKS_PER_SEC) * 1000.0;
+                    printf("Tempo de execução do módulo (ms): %.3f\n", t_exec);
                     printf("Ficheiros gerados: %s %s\n", nome_do_fich, nome_do_fich_rle);    
                 
     }
@@ -109,9 +130,10 @@ int main(int argc, char *argv[ ]){
         
         printf("Módulo: t (cálculo dos códigos dos símbolos)\n");
         do_cod(nome_do_fich,tamanho_ficheiro);
+
         end_t = clock();
-        t_exec = ((double)(end_t-start_t)/ CLOCKS_PER_SEC) * 1000;
-        printf("Tempo de execução do módulo (ms): %ld\n", t_exec);
+        t_exec = ((double)(end_t-start_t)/ CLOCKS_PER_SEC) * 1000.0;
+        printf("Tempo de execução do módulo (ms): %.3f\n", t_exec);
         printf("Ficheiro gerado: %s\n", nome_do_fich);
      
     }
@@ -119,3 +141,27 @@ int main(int argc, char *argv[ ]){
     
 
 }
+
+/* No processamento por blocos o ficheiro é dividido pelo tamanho dado pelo utilizador (block_size), ao realizar a Compressao RLE os 
+blocos que tinham block_size mudam de tamanho, na nossa implementaçao, antes de calcular as frequencias dos blocos, criamos 
+um ficheiro ".rle", ou seja, se os blocos rle tinham: 654780/345782/3008 bytes, o ficheiro ".rle" tem 1003570 bytes e os blocos processados
+para o calculo das frequencias tem block_size (655360/348210).
+
+Quando realizamos o RLE o tamanho dos blocos finais mantem-se com o tamanho inicial,
+ porém o ficheiro é comprimido, pois o número de blocos e/ou o tamanho do último bloco diminui.*/
+
+
+/*{
+unsigned long long tamanho_ficheiro;
+long long n_blocks;
+unsigned long size_of_last_block, block_size;
+char nome_do_fich [100] = "ddd.rle";
+char inp_size = 'b';
+processamento_blocos(nome_do_fich,inp_size,&tamanho_ficheiro, &n_blocks, &size_of_last_block, &block_size);
+
+printf("print:%llu\n%lu\n%lld\n%lu\n", tamanho_ficheiro,block_size,n_blocks,size_of_last_block);
+do_freqM(nome_do_fich,&tamanho_ficheiro, &n_blocks, &size_of_last_block, &block_size);
+}
+
+
+*/

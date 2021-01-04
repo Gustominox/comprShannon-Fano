@@ -111,7 +111,7 @@ void do_cod (char *nome_do_fich, unsigned long long tamanho_ficheiro){
     unsigned long size_of_last_block, block_size;
     vfs tabela[256];
     char buffer_e[tamanho_ficheiro];
-    char buffer_s[1280];
+    char buffer_s[128000];
     fread(buffer_e, tamanho_ficheiro, 1, f_e);
     n_blocks = string_int(buffer_e + 3, &salto);
     printf("Número de Blocos: %lld\n", n_blocks);
@@ -193,5 +193,7 @@ void do_cod (char *nome_do_fich, unsigned long long tamanho_ficheiro){
     buffer_s[0] = '0';
     fwrite(buffer_s, 1, 1, f_s);
 
+fclose(f_e);
+fclose(f_s);
 strcpy(nome_do_fich,nome_do_fich_cod);
 }
