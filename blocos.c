@@ -22,7 +22,6 @@ void data() {
     mes = local->tm_mon + 1;
     ano = local->tm_year + 1900;
 
-    // print current date
     printf("%02d/%02d/%d\n", dia, mes, ano);
 
 }
@@ -34,7 +33,7 @@ FILE *f_e;
  
 f_e = fopen(nome_do_fich, "rb");
 
-*block_size = inp_size;// "[-b K|m|M] ou null" - size_t size [65 536 bytes, 6415360 bytes]  
+*block_size = inp_size; 
 
 *n_blocks = fsize(f_e, NULL, block_size, size_of_last_block);
 *tamanho_ficheiro = (*n_blocks-1) * *block_size + *size_of_last_block; 
