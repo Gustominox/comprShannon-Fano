@@ -1,7 +1,10 @@
 <div align="center">
 Universidade do Minho, Departamento de Informática
+  
 MIEI, 2020-2021
+
 Comunicação de Dados
+
 Trabalho Prático
 </div>
 
